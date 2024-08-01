@@ -1,0 +1,10 @@
+[package]
+name = "rusy_demo"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rutie = {version="0.8.2"}
+
+[lib]
+crate-type = ["cdylib"]
