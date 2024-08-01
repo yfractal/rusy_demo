@@ -1,14 +1,33 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+#[macro_use]
+extern crate rutie;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use rutie::{Class, Object, RString, VM};
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+class!(RutieExample);
+
+methods!(
+    RutieExample,
+    _rtself,
+
+    fn pub_reverse(input: RString) -> RString {
+        let ruby_string = input.
+          map_err(|e| VM::raise_ex(e) ).
+          unwrap();
+
+        RString::new_utf8(
+          &ruby_string.
+          to_string().
+          chars().
+          rev().
+          collect::<String>()
+        )
     }
+);
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub extern "C" fn Init_rusy_demo() {
+    Class::new("RutieExample", None).define(|klass| {
+        klass.def_self("reverse", pub_reverse);
+    });
 }

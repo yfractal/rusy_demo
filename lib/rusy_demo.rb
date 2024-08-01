@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "rusy_demo/version"
+require_relative 'rusy_demo/version'
+require 'rutie'
 
 module RusyDemo
   class Error < StandardError; end
-  # Your code goes here...
+  Rutie.new(:rusy_demo).init 'Init_rusy_demo', __dir__
 end
